@@ -1,3 +1,27 @@
+#########################################################################################################
+############################ ----- AUTO MACRO EVENT QUEST DO EDEN ---------##############################
+############################ ----- QUEST BOYA 26-32 -----------------------##############################
+############################ ----- BUILD MERCHANT - FERREIRO --------------##############################
+############################ ----- PROJETO MERCADOR 1-175 -----------------##############################
+############################ ----- BY DOCMEGAN + QUEM FOR CONTRIBUINDO ----##############################
+#########################################################################################################
+#
+#  
+#  ░░░░░░░░░░░░░░░░▄██
+#  ░░░░▄████▄▄▄▄▄▄███████
+#  ░░▄█▀████████████▀
+#  ░▄▀░██▀██▀▀▀▀▀██▀▀▄
+#  ░░░░█▄░▀█▄░░░░▀█▄▀▀
+#
+# ██████╗ ██████╗ ███████╗███╗   ██╗██╗  ██╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+#██╔════╝██╔═══██╗██╔════╝████╗  ██║██║ ██╔╝██║ ██╔╝██╔═══██╗██╔══██╗██╔════╝
+#██║     ██║   ██║█████╗  ██╔██╗ ██║█████╔╝ █████╔╝ ██║   ██║██████╔╝█████╗  
+#██║     ██║   ██║██╔══╝  ██║╚██╗██║██╔═██╗ ██╔═██╗ ██║   ██║██╔═══╝ ██╔══╝  
+#╚██████╗╚██████╔╝███████╗██║ ╚████║██║  ██╗██║  ██╗╚██████╔╝██║     ███████╗
+# ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝
+#
+
+
 automacro iniciarMissaoBoya {
     level == 30
     run-once 1
@@ -50,7 +74,7 @@ macro iniciarMissaoBoya {
     do talk r3
     pause 2
 
-    # Falar com a Instrutora Boya
+                # Falar com a Instrutora Boya
     do move moc_para01 23 35
     pause 1
     do talknpc 23 35 c
@@ -85,11 +109,11 @@ macro iniciarMissaoBoya {
     pause 1
     do talk c
 
-        # Sair do Éden para Geffen (teleporte)
+                    # Sair do Éden para Geffen (teleporte)
     do move moc_para01 29 10
     pause 2
 
-    # Ir até Coral em Payon
+                    # Ir até Coral em Payon
     do move pay_arche 41 133
     pause 1
     do conf lockMap pay_arche
@@ -97,7 +121,7 @@ macro iniciarMissaoBoya {
     do move pay_arche 41 135
     pause 1
 
-    # Conversa com Coral (antes da caçada)
+                     Conversa com Coral (antes da caçada)
     do talknpc 41 135 c
     pause 1
     do talk c
@@ -119,26 +143,36 @@ macro iniciarMissaoBoya {
     do talk c
     pause 2
 
-    # Ir para a dungeon e iniciar caçada de Skeletons
-    do move pay_dun00
-    pause 2
-    do conf route_randomWalk 1
+                    # Começar caçada de Skeletons
+    set $.skeleton = 0
+    do move pay_dun00 20 20
     do conf attackAuto 1
-    do conf attackAuto_followTarget 0
-    do conf attackAuto_party 0
-    do conf attackAuto_onlyWhenSafe 0
-    do conf attackAuto_inLockOnly 0
+    do conf route_randomWalk 1
+    log Iniciando caçada de Skeletons...
+}
 
-    do kill Skeleton 15
-    pause 2
+automacro matouSkeleton {
+    monsterDead Skeleton
+    run-once 0
+    call contarSkeleton
+}
 
-    # Retornar para Coral após Skeletons
-    do conf route_randomWalk 0
+macro contarSkeleton {
+    set $.skeleton += 1
+    log [Skeleton] Mortos: $.skeleton de 15
+    if ($.skeleton >= 15) call voltarCoralSkeleton
+}
+
+macro voltarCoralSkeleton {
+    log [Skeleton] Caçada completa! Voltando ao Coral.
     do conf attackAuto 0
+    do conf route_randomWalk 0
     do move pay_arche 41 135
-    pause 1
+    release falarComCoralPosSkeleton
+}
 
-    # Conversa com Coral (após Skeletons)
+macro falarComCoralPosSkeleton {
+    # Conversa com Coral após Skeletons
     do talknpc 41 135 c
     pause 1
     do talk c
@@ -152,21 +186,35 @@ macro iniciarMissaoBoya {
     do talk c
     pause 2
 
-    # Ir caçar Poporings
-    do move pay_dun00
-    pause 2
-    do conf route_randomWalk 1
+    # Começar caçada de Poporings
+    set $.poporing = 0
+    do move pay_dun00 20 20
     do conf attackAuto 1
+    do conf route_randomWalk 1
+    log Iniciando caçada de Poporings...
+}
 
-    do kill Poporing 10
-    pause 2
+automacro matouPoporing {
+    monsterDead Poporing
+    run-once 0
+    call contarPoporing
+}
 
-    # Retornar para Coral após Poporings
-    do conf route_randomWalk 0
+macro contarPoporing {
+    set $.poporing += 1
+    log [Poporing] Mortos: $.poporing de 10
+    if ($.poporing >= 10) call voltarCoralPoporing
+}
+
+macro voltarCoralPoporing {
+    log [Poporing] Caçada completa! Voltando ao Coral.
     do conf attackAuto 0
+    do conf route_randomWalk 0
     do move pay_arche 41 135
-    pause 1
+    release falarComCoralPosPoporing
+}
 
+macro falarComCoralPosPoporing {
     # Conversa final com Coral
     do talknpc 41 135 c
     pause 1
@@ -177,15 +225,13 @@ macro iniciarMissaoBoya {
     do talk c
     pause 2
 
-    # Usar o item [22508] Emblema do Éden para voltar
+                    # Usar Emblema do Éden
     do use 22508
     pause 3
 
-     # Mover para falar com a Instrutora Boya novamente
+                    # Voltar à Instrutora Boya
     do move moc_para01 23 35
     pause 1
-
-    # Conversa com a Boya após completar caçadas
     do talknpc 23 35 c
     pause 1
     do talk c
@@ -200,15 +246,13 @@ macro iniciarMissaoBoya {
     pause 1
     do talk c
     pause 2
-    
-      # Falar com o Administrador Mihael para receber a recompensa
+
+                    # Falar com Administrador Mihael
     do move moc_para01 110 83
     pause 1
     do talknpc 110 83 c
     pause 1
-    do talk r0          # Escolher a primeira resposta
-    pause 1
-    do talk c           # Avançar balões
+    do talk r0
     pause 1
     do talk c
     pause 1
@@ -218,11 +262,13 @@ macro iniciarMissaoBoya {
     pause 1
     do talk c
     pause 1
-    do talk r1          # Escolher a segunda resposta "enough"
+    do talk c
+    pause 1
+    do talk r1
     pause 1
     do talk c
     pause 1
-    do talk r0          # Escolher "0  Sabre of Eden I"
+    do talk r0
     pause 1
     do talk c
     pause 1
@@ -231,7 +277,7 @@ macro iniciarMissaoBoya {
     do talk c
     pause 2
 
-    # Equipar os itens do Éden
+                    # Equipar os itens do Éden
     do eq 15
     pause 0.5
     do eq 16
@@ -243,7 +289,6 @@ macro iniciarMissaoBoya {
     do eq 19
     pause 1
 
-    # Finalizar e retornar à macro principal
+                    # Retornar à macro de up
     release vaiPicky
-}
 }
