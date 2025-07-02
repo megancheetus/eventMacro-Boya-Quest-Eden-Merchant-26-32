@@ -1,0 +1,249 @@
+automacro iniciarMissaoBoya {
+    level == 30
+    run-once 1
+    call iniciarMissaoBoya
+}
+
+macro iniciarMissaoBoya {
+    # Ir até o Oficial do Éden em Geffen
+    do move geffen 130 66
+    pause 1
+    do talknpc 132 66 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk r0
+    pause 2
+    do talk c
+    pause 2
+
+    # Personagem será teleportado para moc_para01 (grupo Éden)
+    # Falar com Lime Evenor
+    do move moc_para01 27 31
+    pause 1
+    do talknpc 27 35 c
+    pause 1
+    do talk r1
+    pause 1
+    do talk c
+    pause 1
+    do talk r0
+    pause 1
+    do talk text nonick
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk text nonick
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk r3
+    pause 2
+
+    # Falar com a Instrutora Boya
+    do move moc_para01 23 35
+    pause 1
+    do talknpc 23 35 c
+    pause 1
+    do talk r1
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk r0
+    pause 1
+    do talk c
+    pause 1
+    do talk r0
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+
+        # Sair do Éden para Geffen (teleporte)
+    do move moc_para01 29 10
+    pause 2
+
+    # Ir até Coral em Payon
+    do move pay_arche 41 133
+    pause 1
+    do conf lockMap pay_arche
+    pause 1
+    do move pay_arche 41 135
+    pause 1
+
+    # Conversa com Coral (antes da caçada)
+    do talknpc 41 135 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+    # Ir para a dungeon e iniciar caçada de Skeletons
+    do move pay_dun00
+    pause 2
+    do conf route_randomWalk 1
+    do conf attackAuto 1
+    do conf attackAuto_followTarget 0
+    do conf attackAuto_party 0
+    do conf attackAuto_onlyWhenSafe 0
+    do conf attackAuto_inLockOnly 0
+
+    do kill Skeleton 15
+    pause 2
+
+    # Retornar para Coral após Skeletons
+    do conf route_randomWalk 0
+    do conf attackAuto 0
+    do move pay_arche 41 135
+    pause 1
+
+    # Conversa com Coral (após Skeletons)
+    do talknpc 41 135 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+    # Ir caçar Poporings
+    do move pay_dun00
+    pause 2
+    do conf route_randomWalk 1
+    do conf attackAuto 1
+
+    do kill Poporing 10
+    pause 2
+
+    # Retornar para Coral após Poporings
+    do conf route_randomWalk 0
+    do conf attackAuto 0
+    do move pay_arche 41 135
+    pause 1
+
+    # Conversa final com Coral
+    do talknpc 41 135 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+    # Usar o item [22508] Emblema do Éden para voltar
+    do use 22508
+    pause 3
+
+     # Mover para falar com a Instrutora Boya novamente
+    do move moc_para01 23 35
+    pause 1
+
+    # Conversa com a Boya após completar caçadas
+    do talknpc 23 35 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+    
+      # Falar com o Administrador Mihael para receber a recompensa
+    do move moc_para01 110 83
+    pause 1
+    do talknpc 110 83 c
+    pause 1
+    do talk r0          # Escolher a primeira resposta
+    pause 1
+    do talk c           # Avançar balões
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk r1          # Escolher a segunda resposta "enough"
+    pause 1
+    do talk c
+    pause 1
+    do talk r0          # Escolher "0  Sabre of Eden I"
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+    # Equipar os itens do Éden
+    do eq 15
+    pause 0.5
+    do eq 16
+    pause 0.5
+    do eq 17
+    pause 0.5
+    do eq 18
+    pause 0.5
+    do eq 19
+    pause 1
+
+    # Finalizar e retornar à macro principal
+    release vaiPicky
+}
+}
