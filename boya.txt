@@ -74,7 +74,8 @@ macro iniciarMissaoBoya {
     do talk r3
     pause 2
 
-                # Falar com a Instrutora Boya
+    # Falar com a Instrutora Boya
+    log [Boya] Falando com a Instrutora Boya.
     do move moc_para01 23 35
     pause 1
     do talknpc 23 35 c
@@ -109,11 +110,11 @@ macro iniciarMissaoBoya {
     pause 1
     do talk c
 
-                    # Sair do Éden para Geffen (teleporte)
+    ###################--Sair do Éden para Geffen (teleporte)------#####################
     do move moc_para01 29 10
     pause 2
 
-                    # Ir até Coral em Payon
+    ###################-------Ir até Coral em Payon ---------------#####################
     do move pay_arche 41 133
     pause 1
     do conf lockMap pay_arche
@@ -121,7 +122,7 @@ macro iniciarMissaoBoya {
     do move pay_arche 41 135
     pause 1
 
-                     Conversa com Coral (antes da caçada)
+    ######################--Conversa com Coral (antes da caçada)----#####################
     do talknpc 41 135 c
     pause 1
     do talk c
@@ -142,36 +143,34 @@ macro iniciarMissaoBoya {
     pause 1
     do talk c
     pause 2
+    call vaiCaçarSkeleton
+}
+macro vaiCaçarSkeleton {
+    log [Boya] Indo para a dungeon caçar Skeletons.
 
-                    # Começar caçada de Skeletons
-    set $.skeleton = 0
+    # Entrar na dungeon de Payon
     do move pay_dun00 20 20
+    pause 2
+
+    # Ativar combate
     do conf attackAuto 1
     do conf route_randomWalk 1
-    log Iniciando caçada de Skeletons...
+    log [Boya] Iniciando caçada de Skeletons. Aguardando 30 minutos...
+    pause 1800      # 30 minutos em segundos
+    log [Boya] Tempo de caçada encerrado. Indo falar com Coral novamente.
+    do conf attackAuto 0
+    do conf route_randomWalk 0
+    do move pay_arche 41 135
+    pause 2
+
+    call falarComCoralPosSkeleton
 }
 
-automacro matouSkeleton {
-    monsterDead Skeleton
-    run-once 0
-    call contarSkeleton
-}
-
-macro contarSkeleton {
-    set $.skeleton += 1
-    log [Skeleton] Mortos: $.skeleton de 15
-    if ($.skeleton >= 15) call voltarCoralSkeleton
-}
-
-macro voltarCoralSkeleton {
+macro falarComCoralPosSkeleton {
     log [Skeleton] Caçada completa! Voltando ao Coral.
     do conf attackAuto 0
     do conf route_randomWalk 0
     do move pay_arche 41 135
-    release falarComCoralPosSkeleton
-}
-
-macro falarComCoralPosSkeleton {
     # Conversa com Coral após Skeletons
     do talknpc 41 135 c
     pause 1
@@ -185,36 +184,20 @@ macro falarComCoralPosSkeleton {
     pause 1
     do talk c
     pause 2
-
-    # Começar caçada de Poporings
-    set $.poporing = 0
-    do move pay_dun00 20 20
+    log [Poporing] Caçada iniciada. Indo para dungeon.
     do conf attackAuto 1
     do conf route_randomWalk 1
-    log Iniciando caçada de Poporings...
+    do move pay_dun00 20 20
+    pause 1800      # 30 minutos em segundos
+    call falarComCoralFinal
 }
 
-automacro matouPoporing {
-    monsterDead Poporing
-    run-once 0
-    call contarPoporing
-}
-
-macro contarPoporing {
-    set $.poporing += 1
-    log [Poporing] Mortos: $.poporing de 10
-    if ($.poporing >= 10) call voltarCoralPoporing
-}
-
-macro voltarCoralPoporing {
+macro falarComCoralFinal {
     log [Poporing] Caçada completa! Voltando ao Coral.
     do conf attackAuto 0
     do conf route_randomWalk 0
     do move pay_arche 41 135
-    release falarComCoralPosPoporing
-}
-
-macro falarComCoralPosPoporing {
+    
     # Conversa final com Coral
     do talknpc 41 135 c
     pause 1
@@ -224,12 +207,17 @@ macro falarComCoralPosPoporing {
     pause 1
     do talk c
     pause 2
+    pause 1
+    call retornarEdenBoya
+}
 
-                    # Usar Emblema do Éden
-    do use 22508
-    pause 3
 
-                    # Voltar à Instrutora Boya
+macro retornarEdenBoya {
+    log [Eden] Usando Emblema para retornar.
+    $id = &inventory("Emblema do Éden")
+    do is $id
+    pause 4
+    ###################--Voltar à Instrutora Boya------#####################
     do move moc_para01 23 35
     pause 1
     do talknpc 23 35 c
@@ -247,7 +235,7 @@ macro falarComCoralPosPoporing {
     do talk c
     pause 2
 
-                    # Falar com Administrador Mihael
+    ###############--Falar com Administrador Mihael------#####################
     do move moc_para01 110 83
     pause 1
     do talknpc 110 83 c
@@ -277,7 +265,7 @@ macro falarComCoralPosPoporing {
     do talk c
     pause 2
 
-                    # Equipar os itens do Éden
+                    # Equipar os itens do Éden (CONFIRMAR ESSA PARTE, ME PARECE ERRADA)
     do eq 15
     pause 0.5
     do eq 16
