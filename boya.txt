@@ -30,6 +30,7 @@ automacro iniciarMissaoBoya {
 
 macro iniciarMissaoBoya {
     # Ir até o Oficial do Éden em Geffen
+    log [Boya] Iniciando missão do Éden.
     do move geffen 130 66
     pause 1
     do talknpc 132 66 c
