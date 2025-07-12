@@ -1,29 +1,9 @@
-#########################################################################################################
-############################ ----- AUTO MACRO EVENT QUEST DO EDEN ---------##############################
-############################ ----- QUEST BOYA 26-32 -----------------------##############################
-############################ ----- BUILD MERCHANT - FERREIRO --------------##############################
-############################ ----- PROJETO MERCADOR 1-175 -----------------##############################
-############################ ----- BY DOCMEGAN + QUEM FOR CONTRIBUINDO ----##############################
-#########################################################################################################
-#
-#  
-#  ░░░░░░░░░░░░░░░░▄██
-#  ░░░░▄████▄▄▄▄▄▄███████
-#  ░░▄█▀████████████▀
-#  ░▄▀░██▀██▀▀▀▀▀██▀▀▄
-#  ░░░░█▄░▀█▄░░░░▀█▄▀▀
-#
-# ██████╗ ██████╗ ███████╗███╗   ██╗██╗  ██╗██╗  ██╗ ██████╗ ██████╗ ███████╗
-#██╔════╝██╔═══██╗██╔════╝████╗  ██║██║ ██╔╝██║ ██╔╝██╔═══██╗██╔══██╗██╔════╝
-#██║     ██║   ██║█████╗  ██╔██╗ ██║█████╔╝ █████╔╝ ██║   ██║██████╔╝█████╗  
-#██║     ██║   ██║██╔══╝  ██║╚██╗██║██╔═██╗ ██╔═██╗ ██║   ██║██╔═══╝ ██╔══╝  
-#╚██████╗╚██████╔╝███████╗██║ ╚████║██║  ██╗██║  ██╗╚██████╔╝██║     ███████╗
-# ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝
-#
-
+#-------------------------------------------------------------------------------------
+# ---- QUEST DO EDEN 26-32 ----
+#-------------------------------------------------------------------------------------
 
 automacro iniciarMissaoBoya {
-    level == 30
+    BaseLevel == 30
     run-once 1
     call iniciarMissaoBoya
 }
@@ -33,137 +13,50 @@ macro iniciarMissaoBoya {
     log [Boya] Iniciando missão do Éden.
     do move geffen 130 66
     pause 1
-    do talknpc 132 66 c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk r0
-    pause 2
-    do talk c
+    do talknpc 132 66 c c c c r0 c c
     pause 2
 
     # Personagem será teleportado para moc_para01 (grupo Éden)
     # Falar com Lime Evenor
     do move moc_para01 27 31
     pause 1
-    do talknpc 27 35 c
-    pause 1
-    do talk r1
-    pause 1
-    do talk c
-    pause 1
-    do talk r0
-    pause 1
-    do talk text nonick
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk text nonick
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk r3
+    do talknpc 27 35 c r1 c  r0 nonick c c c nonick c c r3
     pause 2
 
     # Falar com a Instrutora Boya
     log [Boya] Falando com a Instrutora Boya.
     do move moc_para01 23 35
     pause 1
-    do talknpc 23 35 c
+    do talknpc 23 35 c r1 c c c c c r0 c r0 c c c c c c
     pause 1
-    do talk r1
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk r0
-    pause 1
-    do talk c
-    pause 1
-    do talk r0
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-
-    ###################--Sair do Éden para Geffen (teleporte)------#####################
     do move moc_para01 29 10
     pause 2
-
-    ###################-------Ir até Coral em Payon ---------------#####################
     do move pay_arche 41 133
     pause 1
     do conf lockMap pay_arche
     pause 1
-    do move pay_arche 41 135
-    pause 1
-
-    ######################--Conversa com Coral (antes da caçada)----#####################
-    do talknpc 41 135 c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
+    do talknpc 41 136 c c c c c c c c c c
     pause 2
-    call vaiCaçarSkeleton
+    release cacaSkeleton
 }
+
+automacro cacaSkeleton {
+    QuestHuntOngoing 7139 1076
+    call vaiCaçarSkeleton
+    run-once 1
+}
+
 macro vaiCaçarSkeleton {
-    log [Boya] Indo para a dungeon caçar Skeletons.
-
-    # Entrar na dungeon de Payon
-    do move pay_dun00 20 20
-    pause 2
-
-    # Ativar combate
-    do conf attackAuto 1
+    do move pay_dun00 
+    do conf lockMap pay_dun00
+    do conf attackAuto 2
     do conf route_randomWalk 1
-    log [Boya] Iniciando caçada de Skeletons. Aguardando 30 minutos...
-    pause 1800      # 30 minutos em segundos
-    log [Boya] Tempo de caçada encerrado. Indo falar com Coral novamente.
-    do conf attackAuto 0
-    do conf route_randomWalk 0
-    do move pay_arche 41 135
-    pause 2
+    log [Boya] Iniciando caçada de Skeletons.
+    
+}
 
+automacro fimCacaSkeleton {
+    QuestHuntCompleted 7139 1015
     call falarComCoralPosSkeleton
 }
 
@@ -173,111 +66,61 @@ macro falarComCoralPosSkeleton {
     do conf route_randomWalk 0
     do move pay_arche 41 135
     # Conversa com Coral após Skeletons
-    do talknpc 41 135 c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 2
-    log [Poporing] Caçada iniciada. Indo para dungeon.
-    do conf attackAuto 1
-    do conf route_randomWalk 1
-    do move pay_dun00 20 20
-    pause 1800      # 30 minutos em segundos
-    call falarComCoralFinal
+    do talknpc 41 136 c c c c c c
+    release cacaPoporing
 }
 
-macro falarComCoralFinal {
+automacro cacaPoporing {
+    QuestHuntOngoing 7140 1031
+    call vaicacarPoporing
+    run-once 1
+}
+
+macro vaicacarPoporing {
+    log [Poporing] Caçada iniciada. Indo para dungeon.
+    do conf attackAuto 2
+    do conf route_randomWalk 1
+    do move pay_dun00
+}
+
+
+automacro fimCacaPoporing {
+    QuestHuntCompleted 7140 1031
+    call falarComCoralPosPoporing
+    run-once 1
+}
+
+macro falarComCoralPosPoporing {
     log [Poporing] Caçada completa! Voltando ao Coral.
     do conf attackAuto 0
     do conf route_randomWalk 0
     do move pay_arche 41 135
-    
-    # Conversa final com Coral
-    do talknpc 41 135 c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 2
+    do talknpc 41 135 c c c c c c
     pause 1
     call retornarEdenBoya
 }
-
 
 macro retornarEdenBoya {
     log [Eden] Usando Emblema para retornar.
     $id = &inventory("Emblema do Éden")
     do is $id
     pause 4
-    ###################--Voltar à Instrutora Boya------#####################
     do move moc_para01 23 35
     pause 1
-    do talknpc 23 35 c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
+    do talknpc 23 35 c c c c c c c
     pause 2
-
-    ###############--Falar com Administrador Mihael------#####################
     do move moc_para01 110 83
     pause 1
-    do talknpc 110 83 c
-    pause 1
-    do talk r0
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk r1
-    pause 1
-    do talk c
-    pause 1
-    do talk r0
-    pause 1
-    do talk c
-    pause 1
-    do talk c
-    pause 1
-    do talk c
+    do talknpc 110 83 c r0 c c c c c r1 c r0 c c c
     pause 2
-
-                    # Equipar os itens do Éden (CONFIRMAR ESSA PARTE, ME PARECE ERRADA)
-    do eq 15
+    do is Arma do Éden I
     pause 0.5
-    do eq 16
+    do is Chapéu do Éden I
     pause 0.5
-    do eq 17
+    do is Capa do Éden I
     pause 0.5
-    do eq 18
+    do is Uniforme do Éden II
     pause 0.5
-    do eq 19
+    do is Botas do Éden II
     pause 1
-
-                    # Retornar à macro de up
-    release vaiPicky
 }
